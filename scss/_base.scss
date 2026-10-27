@@ -1,0 +1,46 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+:root {
+  @include theme-vars($theme-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include theme-vars($theme-dark);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: $font-family;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+button,
+select,
+input {
+  @include focus-ring;
+}
+
+.main {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: ($gutter * 1.5) $gutter ($gutter * 3);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  margin-top: $gutter * 1.5;
+}

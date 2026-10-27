@@ -1,0 +1,27 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: $radius-sm;
+  background: $accent;
+  color: $accent-text;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+}
+
+.icon-btn {
+  @include round-button(40px);
+  font-size: 1.2rem;
+}
+
+.fav-btn[aria-pressed='true'] {
+  color: $fav;
+}
