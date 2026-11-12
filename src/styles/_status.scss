@@ -1,5 +1,7 @@
 @use 'variables' as *;
 
+// ---------- .status ----------
+// Centered block for loading, error and empty messages
 .status {
   display: flex;
   flex-direction: column;
@@ -9,6 +11,7 @@
   text-align: center;
   color: var(--muted);
 
+  // no empty gap when there's nothing to show
   &:empty {
     display: none;
   }
@@ -20,6 +23,8 @@
   }
 }
 
+// ---------- .spinner ----------
+// Circle with one colored side that rotates forever. Pure CSS, no image needed.
 .spinner {
   width: 40px;
   height: 40px;
@@ -29,6 +34,7 @@
   animation: spin 0.8s linear infinite;
 }
 
+// The animation used by .spinner: one full turn
 @keyframes spin {
   to {
     transform: rotate(360deg);

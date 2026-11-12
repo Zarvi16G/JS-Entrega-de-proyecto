@@ -1,0 +1,93 @@
+@use 'sass:color';
+@use 'variables' as *;
+
+// Animations for the "add to favorites" feedback:
+// heart pop → sparkle burst → heart flies to the tab → tab glows.
+
+// ---------- Heart pop ----------
+// The ❤️ grows and settles back, like a quick bounce
+@keyframes heart-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.45);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// ---------- .sparkle ----------
+// Burst of ✨ around the favorite button. Each ✨ gets --i (0, 1, 2...) from CatCard.tsx;
+// multiplying it by 45deg gives each one its own direction around the circle.
+.sparkle {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; // never blocks clicks
+
+  span {
+    --angle: calc(var(--i) * 45deg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 0.85rem;
+    opacity: 0;
+    animation: sparkle-burst 0.7s ease-out forwards; // forwards: stays hidden at the end
+  }
+}
+
+// Rotate towards its angle, then move "up" (which is now outwards) while fading
+@keyframes sparkle-burst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(0) scale(0.4);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-42px) scale(1);
+  }
+}
+
+// ---------- .fly-heart ----------
+// Temporary ❤️ created by utils/flyToTarget.ts. Fixed so it moves over the whole page;
+// the movement itself is done in JS with the Web Animations API.
+.fly-heart {
+  position: fixed;
+  z-index: 100; // above the sticky header
+  font-size: 1.6rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+// ---------- Tab glow ----------
+// Orange halo that grows and fades on the Favorites tab
+@keyframes tab-glow {
+  0% {
+    box-shadow: 0 0 0 0 color.change($accent, $alpha: 0.7);
+    transform: scale(1);
+  }
+  25% {
+    box-shadow: 0 0 18px 6px color.change($accent, $alpha: 0.55);
+    border-color: $accent;
+    transform: scale(1.08);
+  }
+  100% {
+    box-shadow: 0 0 0 14px color.change($accent, $alpha: 0);
+    transform: scale(1);
+  }
+}
+
+// ---------- Reduced motion ----------
+// Users who ask their OS for less motion get no bounces or bursts
+@media (prefers-reduced-motion: reduce) {
+  .sparkle,
+  .fav-btn__icon--pop,
+  .nav__btn--glow {
+    animation: none;
+  }
+
+  .sparkle {
+    display: none;
+  }
+}

@@ -1,69 +1,16 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CatGallery</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <script type="module" src="js/main.js"></script>
+  <!-- Inter: reading font for the breed info modal -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="header">
-    <h1 class="header__title">🐱 CatGallery</h1>
-    <nav class="nav">
-      <button class="nav__btn" data-view="gallery" aria-current="page">Galería</button>
-      <button class="nav__btn" data-view="favorites">
-        Favoritos (<span id="fav-count">0</span>)
-      </button>
-    </nav>
-  </header>
-
-  <main class="main">
-    <!-- Galería -->
-    <section id="view-gallery">
-      <form id="filters" class="filters">
-        <label class="filters__field">
-          Raza
-          <select id="breed-select" name="breed" disabled>
-            <option value="">Cargando razas…</option>
-          </select>
-        </label>
-
-        <fieldset class="filters__field filters__group">
-          <legend>Tipo de imagen</legend>
-          <label><input type="radio" name="mime" value="" checked> Todas</label>
-          <label><input type="radio" name="mime" value="jpg,png"> Estáticas</label>
-          <label><input type="radio" name="mime" value="gif"> Animadas (gif)</label>
-        </fieldset>
-
-        <label class="filters__check">
-          <input type="checkbox" name="onlyWithBreeds" checked>
-          Solo con información de raza
-        </label>
-
-        <button type="submit" class="btn">Aplicar filtros</button>
-      </form>
-
-      <div id="gallery" class="grid"></div>
-      <div id="gallery-status" class="status" aria-live="polite"></div>
-      <div class="center">
-        <button id="load-more" class="btn" hidden>Ver más</button>
-      </div>
-    </section>
-
-    <!-- Favoritos -->
-    <section id="view-favorites" hidden>
-      <h2>Mis favoritos</h2>
-      <div id="favorites" class="grid"></div>
-      <p id="favorites-empty" class="status" hidden>Aún no tienes favoritos. Marca alguno con ♥ en la galería.</p>
-    </section>
-  </main>
-
-  <!-- Modal de información de raza -->
-  <dialog id="breed-modal" class="modal">
-    <button class="modal__close" aria-label="Cerrar">✕</button>
-    <img class="modal__img" alt="">
-    <div class="modal__body"></div>
-  </dialog>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>

@@ -1,6 +1,8 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
+// ---------- Theme ----------
+// Light colors by default; the media query swaps them when the OS is in dark mode.
 :root {
   @include theme-vars($theme-light);
 }
@@ -11,6 +13,8 @@
   }
 }
 
+// ---------- Reset ----------
+// width/height include padding and border, which makes sizes predictable
 * {
   box-sizing: border-box;
 }
@@ -23,22 +27,27 @@ body {
   line-height: 1.5;
 }
 
+// Makes sure the `hidden` attribute always hides, even if a class sets display: flex
 [hidden] {
   display: none !important;
 }
 
+// Keyboard focus outline for every interactive element
 button,
 select,
 input {
   @include focus-ring;
 }
 
+// ---------- Layout helpers ----------
+// Centered content column with side padding (16px gutter on mobile)
 .main {
   max-width: $max-width;
   margin: 0 auto;
   padding: ($gutter * 1.5) $gutter ($gutter * 3);
 }
 
+// Centers a single element horizontally (e.g. the "Load more" button)
 .center {
   display: flex;
   justify-content: center;

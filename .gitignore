@@ -1,1 +1,4 @@
 .Plan.md
+node_modules
+dist
+.env

@@ -1,0 +1,95 @@
+@use 'variables' as *;
+
+// ---------- .grid ----------
+// Responsive grid with no media queries: auto-fill fits as many columns as possible,
+// each at least $card-min wide, and 1fr shares the leftover space between them.
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($card-min, 1fr));
+  gap: $gutter;
+}
+
+// ---------- .card ----------
+// Square card with the photo filling it.
+// position: relative so the overlay and badge can be placed on top of the image.
+.card {
+  position: relative;
+  overflow: hidden; // clips the image to the rounded corners
+  aspect-ratio: 1; // fixed square size, so the layout doesn't jump while images load
+  border-radius: $radius;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+
+  // object-fit: cover fills the square without stretching (crops the excess)
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+      filter 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  // ---------- Overlay ----------
+  // Layer with the 🔍 and ❤️ buttons, centered over the photo.
+  // Invisible by default (opacity 0 keeps it in place, so it fades in smoothly).
+  &__overlay {
+    position: absolute;
+    inset: 0; // top/right/bottom/left: 0 → covers the whole card
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: rgb(0 0 0 / 0.2);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  // Small ❤️ in the corner for cards already in favorites (visible without hovering)
+  &__badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 1.1rem;
+    line-height: 1;
+    filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.4)); // readable on light photos
+    transition: opacity 0.25s ease;
+  }
+
+  // ---------- Hover / keyboard focus ----------
+  // Blur the photo and reveal the buttons. :focus-within also does it when a button
+  // inside gets keyboard focus, so it works without a mouse.
+  &:hover,
+  &:focus-within {
+    img {
+      filter: blur(4px) brightness(0.85);
+      transform: scale(1.05); // hides the blurred, faded edges
+    }
+
+    .card__overlay {
+      opacity: 1;
+    }
+
+    .card__badge {
+      opacity: 0; // the overlay's ❤️ replaces it
+    }
+  }
+
+  // ---------- Touch screens ----------
+  // There's no hover on phones, so the buttons are always visible in the corner instead.
+  @media (hover: none) {
+    &__overlay {
+      opacity: 1;
+      align-items: flex-start;
+      justify-content: flex-end;
+      gap: 6px;
+      padding: 8px;
+      background: none;
+    }
+
+    &__badge {
+      display: none; // the ❤️ button is already visible
+    }
+  }
+}

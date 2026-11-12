@@ -1,0 +1,62 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ---------- .btn ----------
+// Main action button (Apply filters, Load more, Retry)
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: $radius-sm;
+  background: $accent;
+  color: $accent-text;
+  font: inherit; // buttons don't inherit the page font by default
+  font-weight: 600;
+  cursor: pointer;
+
+  // dimmed while a request is running, so the user knows to wait
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+}
+
+// ---------- .icon-btn ----------
+// Emoji-only buttons on the cat cards (🔍 and ❤️): no background, just the emoji.
+// The drop shadow keeps the emoji readable on any photo. Grows on hover so it's clear it can be clicked.
+.icon-btn {
+  display: grid;
+  place-items: center; // centers the emoji
+  width: 48px; // keeps a comfortable click area even without a visible background
+  height: 48px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 1.9rem;
+  line-height: 1;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgb(0 0 0 / 0.45));
+  transition: transform 0.15s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// ---------- .fav-btn ----------
+// position: relative so the sparkle burst (absolute) is centered on the button
+.fav-btn {
+  position: relative;
+
+  &__icon {
+    display: inline-block; // transforms don't apply to inline elements
+
+    // short "pop" when the cat is added to favorites (keyframes in _effects.scss)
+    &--pop {
+      animation: heart-pop 0.45s ease-out;
+    }
+  }
+}

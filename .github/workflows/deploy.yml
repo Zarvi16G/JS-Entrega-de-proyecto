@@ -1,0 +1,52 @@
+# Builds the app and publishes it to GitHub Pages on every push to main.
+name: Deploy to GitHub Pages
+
+# When it runs: on push to main, or manually from the Actions tab
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Minimum permissions needed to publish to Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# If you push twice quickly, the older deploy is cancelled
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  # ---------- build ----------
+  # Installs dependencies, compiles TS + Sass with Vite and uploads the dist/ folder
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      # npm ci installs exactly what package-lock.json says (reproducible builds)
+      - run: npm ci
+      # the API key comes from the repo secret, since .env is not in the repo
+      - run: npm run build
+        env:
+          VITE_CAT_API_KEY: ${{ secrets.VITE_CAT_API_KEY }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  # ---------- deploy ----------
+  # Publishes the uploaded dist/ folder as the live site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

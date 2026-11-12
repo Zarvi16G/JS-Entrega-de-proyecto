@@ -1,0 +1,50 @@
+// ---------- Theme colors ----------
+// Sass maps with one entry per color. They become CSS custom properties (--bg, --text...)
+// in _base.scss, because Sass variables are fixed at compile time and can't change
+// when the user switches to dark mode; custom properties can.
+$theme-light: (
+  bg: #f6f3ee,
+  surface: #ffffff,
+  text: #2b2622,
+  muted: #6f665e,
+  border: #e4ddd3,
+  error: #b42318,
+  shadow: 0 2px 8px rgb(0 0 0 / 0.08),
+);
+
+$theme-dark: (
+  bg: #1b1917,
+  surface: #262320,
+  text: #f1ece6,
+  muted: #a99f95,
+  border: #3a3531,
+  error: #ff8a7a,
+  shadow: 0 2px 8px rgb(0 0 0 / 0.4),
+);
+
+// ---------- Shared colors ----------
+// Same in both themes, so plain Sass variables are enough.
+$accent: #e0603c; // brand orange: buttons, active states
+$accent-text: #fff4e3; // cream, for text on the accent color
+$accent-text-muted: #f9d7b8; // darker cream, for secondary text on the accent color
+$fav: #e0335a; // filled heart
+$on-image-bg: rgb(255 255 255 / 0.9); // buttons floating on top of photos
+$on-image-text: #2b2622;
+
+// ---------- Layout tokens ----------
+// Reused sizes, so spacing and corners stay consistent across the page.
+$font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+// Font for longer texts (breed info). Falls back to the system font if Inter doesn't load.
+$font-reading: 'Inter', $font-family;
+$radius: 12px;
+$radius-sm: 8px;
+$gutter: 16px; // base spacing unit
+$max-width: 1100px;
+$card-min: 250px; // narrowest a card can get before the grid drops a column
+
+// ---------- Breakpoints ----------
+// Screen widths used by the `from()` mixin for responsive styles.
+$breakpoints: (
+  sm: 600px,
+  md: 900px,
+);

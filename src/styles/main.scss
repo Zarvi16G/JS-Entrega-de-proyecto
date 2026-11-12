@@ -1,0 +1,12 @@
+// ---------- Styles entry point ----------
+// Imported from src/main.tsx; Vite compiles it to plain CSS.
+// Each partial (_name.scss) holds the styles of one part of the page.
+// @use loads a file once and keeps its variables private to it (unlike the old @import).
+@use 'base';
+@use 'buttons';
+@use 'header';
+@use 'filters';
+@use 'card';
+@use 'status';
+@use 'modal';
+@use 'effects';

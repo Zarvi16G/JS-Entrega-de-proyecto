@@ -1,0 +1,64 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ---------- .header ----------
+// Top bar. `sticky` keeps it visible while scrolling the gallery.
+// flex-wrap lets the nav drop below the title on narrow screens.
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10; // stays above the cards while scrolling
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  // More breathing room from the screen edges as the screen gets wider
+  padding: 14px $gutter * 1.25;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+
+  @include from(sm) {
+    padding: 16px $gutter * 2;
+  }
+
+  @include from(md) {
+    padding: 18px $gutter * 3;
+  }
+
+  // & joins the parent selector: &__title compiles to .header__title (BEM naming)
+  &__title {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+}
+
+// ---------- .nav ----------
+// Pill-shaped buttons to switch between Gallery and Favorites
+.nav {
+  display: flex;
+  gap: 8px;
+
+  &__btn {
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px; // large radius = pill shape
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+
+    // active view, marked by aria-current in Header.tsx
+    &[aria-current] {
+      background: $accent;
+      border-color: $accent;
+      color: $accent-text;
+    }
+
+    // Lights up the Favorites tab when a cat is added, so the user sees where it went
+    // (keyframes in _effects.scss)
+    &--glow {
+      animation: tab-glow 1.2s ease-out;
+    }
+  }
+}

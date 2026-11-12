@@ -1,0 +1,47 @@
+@use 'sass:map';
+@use 'variables' as *;
+
+// Mixins are reusable blocks of CSS: write once, @include anywhere.
+
+// ---------- from ----------
+// Mobile-first media query: styles inside apply from that screen width up.
+// Usage: @include from(md) { ... }
+@mixin from($name) {
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+// ---------- theme-vars ----------
+// Loops over a theme map and outputs one custom property per entry (--bg: #...;).
+// Saves writing each color by hand for light and dark themes.
+@mixin theme-vars($theme) {
+  @each $name, $value in $theme {
+    --#{$name}: #{$value};
+  }
+}
+
+// ---------- round-button ----------
+// Circular button that floats on top of an image (card actions, modal close).
+// Light background so it stays readable on any photo.
+@mixin round-button($size) {
+  width: $size;
+  height: $size;
+  border: none;
+  border-radius: 50%;
+  background: $on-image-bg;
+  color: $on-image-text;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+// ---------- focus-ring ----------
+// Visible outline when navigating with the keyboard (Tab).
+// :focus-visible doesn't show it on mouse clicks, only when it's useful.
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 3px solid $accent;
+    outline-offset: 2px;
+  }
+}
